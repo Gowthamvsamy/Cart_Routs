@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Product from "./component/Product"
-import Nav from "./component/Nav";
 import { Route, Routes } from "react-router-dom";
 import Home from "./component/home";
 import About from "./component/About";

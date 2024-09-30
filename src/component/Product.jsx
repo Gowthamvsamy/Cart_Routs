@@ -182,26 +182,44 @@ function Product() {
 
                                     {/*  quantity */}
                                     <p className='flex gap-5 justify-center items-center'>
-                                        <button className='border rounded px-2 py-1 hover:bg-slate-100 focus:bg-slate-100 hover:scale-110 focus:scale-110'
+                                        {/* Button to increase the quantity of the item in the cart */}
+                                        <button
+                                            className='border rounded px-2 py-1 hover:bg-slate-100 focus:bg-slate-100 hover:scale-110 focus:scale-110'
                                             onClick={() => {
+                                                // Update the cart items by incrementing the quantity of the selected item
                                                 const updatedCart = cartItems.map((cartItem, i) =>
-                                                    i === index ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
+                                                    i === index // Check if the current item index matches the one being updated
+                                                        ? { ...cartItem, quantity: cartItem.quantity + 1 } // Increment quantity
+                                                        : cartItem // Return the item unchanged
                                                 );
-                                                setCartItems(updatedCart);
+                                                setCartItems(updatedCart); // Update the state with the new cart items
                                             }}
-                                        >+</button>
+                                        >
+                                            +
+                                        </button>
+
+                                        {/* Display the current quantity of the item */}
                                         {item.quantity}
-                                        <button className='border rounded px-2 py-1 hover:bg-slate-100 focus:bg-slate-100 hover:scale-110 focus:scale-110'
+
+                                        {/* Button to decrease the quantity of the item in the cart */}
+                                        <button
+                                            className='border rounded px-2 py-1 hover:bg-slate-100 focus:bg-slate-100 hover:scale-110 focus:scale-110'
                                             onClick={() => {
+                                                // Only decrement if the quantity is greater than 1 to avoid zero or negative quantities
                                                 if (item.quantity > 1) {
                                                     const updatedCart = cartItems.map((cartItem, i) =>
-                                                        i === index ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
+                                                        i === index // Check if the current item index matches the one being updated
+                                                            ? { ...cartItem, quantity: cartItem.quantity - 1 } // Decrement quantity
+                                                            : cartItem // Return the item unchanged
                                                     );
-                                                    setCartItems(updatedCart);
+                                                    setCartItems(updatedCart); // Update the state with the new cart items
                                                 }
                                             }}
-                                        >-</button>
+                                        >
+                                            -
+                                        </button>
                                     </p>
+
 
                                     {/* Delete item button */}
                                     <button
@@ -251,21 +269,37 @@ function Product() {
             )}
 
             {showBuyModal && (
+                // Modal overlay that covers the entire screen
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    {/* Modal content container */}
                     <div className="bg-white p-5 rounded-lg shadow-lg w-full md:w-3/6 mx-2 sm:mx-5 md:mx-0 max-h-[300px]">
-                        <button className='border bg-red-500 rounded p-.5 px-2 text-white text-2xl flex ml-auto' onClick={handleCloseBuyModal}>
+                        {/* Close button for the modal */}
+                        <button
+                            className='border bg-red-500 rounded p-.5 px-2 text-white text-2xl flex ml-auto'
+                            onClick={handleCloseBuyModal} // Function to close the modal
+                        >
                             X
                         </button>
+                        {/* Modal title */}
                         <h2 className="text-2xl mb-4 text-center">Total Amount</h2>
+                        {/* Display the original total amount with a strikethrough */}
                         <p className="text-center text-lg line-through">₹&nbsp;{calculateTotalAmount()}</p>
+                        {/* Display the discount information */}
                         <p className="text-center text-xl my-3">10% discount</p>
-                        <p className='text-center text-xl font-semibold'>₹&nbsp;{calculateTotalAmount() - (calculateTotalAmount() * 10 / 100)}</p>
+                        {/* Calculate and display the discounted total amount */}
+                        <p className='text-center text-xl font-semibold'>
+                            ₹&nbsp;{(calculateTotalAmount() - (calculateTotalAmount() * 10 / 100)).toFixed(2)}
+                        </p>
+                        {/* Button to proceed to payment */}
                         <div className='flex justify-center mt-5'>
-                            <button className='border px-4 py-2 rounded bg-yellow-600 hover:bg-yellow-500 text-white'>Proceed to Payment</button>
+                            <button className='border px-4 py-2 rounded bg-yellow-600 hover:bg-yellow-500 text-white'>
+                                Proceed to Payment
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
+
         </div>
     );
 }
